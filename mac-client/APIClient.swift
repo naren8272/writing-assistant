@@ -1,0 +1,2 @@
+import Foundation
+final class APIClient{func rewrite(text:String)async throws->RewriteResponse{var r=URLRequest(url:AppConfig.apiBaseURL.appendingPathComponent("api/v1/rewrite"));r.httpMethod="POST";r.setValue("application/json",forHTTPHeaderField:"Content-Type");r.httpBody=try JSONEncoder().encode(RewriteRequest(text:text));let(d,x)=try await URLSession.shared.data(for:r);guard let h=x as? HTTPURLResponse,(200..<300).contains(h.statusCode)else{throw URLError(.badServerResponse)};return try JSONDecoder().decode(RewriteResponse.self,from:d)}}

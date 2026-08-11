@@ -1,0 +1,76 @@
+[dotenv] Set [36mANTHROPIC_API_KEY[0m, [36mANTHROPIC_MODEL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mANTHROPIC_API_KEY[0m, [36mANTHROPIC_MODEL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Loaded [33m.env[0m
+Started POST "/api/v1/rewrite" for 127.0.0.1 at 2026-08-07 21:46:57 +0530
+Processing by Api::V1::RewritesController#create as */*
+  Parameters: {"rewrite"=>{}}
+Completed 422 Unprocessable Content in 4ms (Views: 0.1ms | GC: 0.0ms)
+
+
+[dotenv] Set [36mGROQ_API_KEY[0m, [36mGROQ_MODEL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Loaded [33m.env[0m
+Started POST "/api/v1/rewrite" for 127.0.0.1 at 2026-08-08 00:41:31 +0530
+Processing by Api::V1::RewritesController#create as */*
+  Parameters: {"text"=>"hello there i want fix this sentance", "rewrite"=>{"text"=>"hello there i want fix this sentance"}}
+rewrite_failed=Ai::Error: groq_http_401: {"error":{"message":"Invalid API Key","type":"invalid_request_error","code":"invalid_api_key"}}
+
+Completed 502 Bad Gateway in 173ms (Views: 0.1ms | GC: 2.8ms)
+
+
+[dotenv] Set [36mGROQ_API_KEY[0m, [36mGROQ_MODEL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mGROQ_API_KEY[0m, [36mGROQ_MODEL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Loaded [33m.env[0m
+Started POST "/api/v1/rewrite" for 127.0.0.1 at 2026-08-08 00:49:27 +0530
+Processing by Api::V1::RewritesController#create as */*
+  Parameters: {"text"=>"Over the last four-plus years, my focus has been on high-scale, high-availability backend systems where reliability isn't optional because real money is moving through them. I started my career at Logipe, working on core payment infrastructure. There I engineered payment modules integrating UPI rails, vendor disbursement workflows, and a virtual master account layer — handling fund routing, ledger reconciliation, and transaction atomicity across multiple sub-wallets, processing over 10 million transactions a day. I also shipped features like UPI on prepaid cards with retry mechanisms and a fuel wallet with OTP-based authentication. On the infrastructure side, I built an asynchronous processing pipeline using Amazon SQS that eliminated data-integrity errors at scale, and set up our CI/CD pipeline from scratch with Jenkins, Docker, and Kubernetes, which cut deployment time by around 70% and enabled zero-downtime deploys.", "rewrite"=>{"text"=>"Over the last four-plus years, my focus has been on high-scale, high-availability backend systems where reliability isn't optional because real money is moving through them. I started my career at Logipe, working on core payment infrastructure. There I engineered payment modules integrating UPI rails, vendor disbursement workflows, and a virtual master account layer — handling fund routing, ledger reconciliation, and transaction atomicity across multiple sub-wallets, processing over 10 million transactions a day. I also shipped features like UPI on prepaid cards with retry mechanisms and a fuel wallet with OTP-based authentication. On the infrastructure side, I built an asynchronous processing pipeline using Amazon SQS that eliminated data-integrity errors at scale, and set up our CI/CD pipeline from scratch with Jenkins, Docker, and Kubernetes, which cut deployment time by around 70% and enabled zero-downtime deploys."}}
+Completed 200 OK in 2146ms (Views: 0.4ms | GC: 3.0ms)
+
+
+Started POST "/api/v1/rewrite" for 127.0.0.1 at 2026-08-08 00:50:24 +0530
+Processing by Api::V1::RewritesController#create as */*
+  Parameters: {"text"=>"Hey Team, we are enabling new-device MFA for @atob.com accounts. App logins with an @atob.com account will be subject to a new device-based MFA check. This is being rolled out to atob accounts first, slowly rolled out to all the customers later. Currently customer logins are unchanged.\n\nWhat to expect\n• If you do not have an authenticator app or SMS factor enrolled, you will be prompted to enroll one at your next login. An authenticator app is recommended. Email OTP is not offered.\n• If you already have a factor enrolled, you will be challenged only when the device is not recognized or when risk signals indicate elevated risk. Routine logins from a recognized device will not be challenged.\n• Device recognition is handled automatically based on prior authenticated sessions.\n• Existing sessions are unaffected.\n\nEnroll an authenticator app when prompted, and retain access to it. There is currently no fallback factor, recovery requires a manual request", "rewrite"=>{"text"=>"Hey Team, we are enabling new-device MFA for @atob.com accounts. App logins with an @atob.com account will be subject to a new device-based MFA check. This is being rolled out to atob accounts first, slowly rolled out to all the customers later. Currently customer logins are unchanged.\n\nWhat to expect\n• If you do not have an authenticator app or SMS factor enrolled, you will be prompted to enroll one at your next login. An authenticator app is recommended. Email OTP is not offered.\n• If you already have a factor enrolled, you will be challenged only when the device is not recognized or when risk signals indicate elevated risk. Routine logins from a recognized device will not be challenged.\n• Device recognition is handled automatically based on prior authenticated sessions.\n• Existing sessions are unaffected.\n\nEnroll an authenticator app when prompted, and retain access to it. There is currently no fallback factor, recovery requires a manual request"}}
+Completed 200 OK in 1314ms (Views: 0.2ms | GC: 0.0ms)
+
+
+Started POST "/api/v1/rewrite" for 127.0.0.1 at 2026-08-08 00:50:41 +0530
+Processing by Api::V1::RewritesController#create as */*
+  Parameters: {"text"=>"are you joining the call?", "rewrite"=>{"text"=>"are you joining the call?"}}
+Completed 200 OK in 523ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/api/v1/rewrite" for 127.0.0.1 at 2026-08-08 00:59:35 +0530
+Processing by Api::V1::RewritesController#create as */*
+  Parameters: {"text"=>"Your new API key has been created. Copy it now, as we will not display it again.", "rewrite"=>{"text"=>"Your new API key has been created. Copy it now, as we will not display it again."}}
+Completed 200 OK in 859ms (Views: 0.2ms | GC: 0.0ms)
+
+
+Started POST "/api/v1/rewrite" for 127.0.0.1 at 2026-08-08 01:46:55 +0530
+Processing by Api::V1::RewritesController#create as */*
+  Parameters: {"text"=>"I checked a problem with login verification. When we switch the customer, login verification is active only for the initial login user. This will be the issue as it want to be active for the user under that customer if user switch their customer.", "rewrite"=>{"text"=>"I checked a problem with login verification. When we switch the customer, login verification is active only for the initial login user. This will be the issue as it want to be active for the user under that customer if user switch their customer."}}
+Completed 200 OK in 1014ms (Views: 0.6ms | GC: 1.1ms)
+
+
+Started POST "/api/v1/rewrite" for 127.0.0.1 at 2026-08-08 01:46:59 +0530
+Processing by Api::V1::RewritesController#create as */*
+  Parameters: {"text"=>"I checked a problem with login verification. When we switch the customer, login verification is active only for the initial login user. This will be the issue as it want to be active for the user under that customer if user switch their customer.", "rewrite"=>{"text"=>"I checked a problem with login verification. When we switch the customer, login verification is active only for the initial login user. This will be the issue as it want to be active for the user under that customer if user switch their customer."}}
+Completed 200 OK in 969ms (Views: 0.1ms | GC: 2.7ms)
+
+
+[dotenv] Set [36mGROQ_API_KEY[0m, [36mGROQ_MODEL[0m
+[dotenv] Loaded [33m.env.local[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Loaded [33m.env.local[0m
+[dotenv] Loaded [33m.env[0m
+Started POST "/api/v1/rewrite" for 127.0.0.1 at 2026-08-11 13:05:43 +0530
+Processing by Api::V1::RewritesController#create as */*
+  Parameters: {"text"=>"Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string \"\".", "rewrite"=>{"text"=>"Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string \"\"."}}
+Completed 200 OK in 1232ms (Views: 0.4ms | GC: 8.0ms)
+
+
