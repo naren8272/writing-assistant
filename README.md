@@ -52,7 +52,6 @@ The Rails hop exists so the API key never ships inside the client.
 | macOS | 14 (Sonoma) or later |
 | Xcode Command Line Tools | any recent (`xcode-select --install`) |
 | Ruby | 3.2+ (developed on 3.3) |
-| Groq API key | free — https://console.groq.com/keys |
 
 A full Xcode installation is **not** required.
 
@@ -65,10 +64,10 @@ A full Xcode installation is **not** required.
 ```bash
 cd api
 bundle install
-cp .env.example .env
+cp .env.local .env
 ```
 
-Add your key to `.env`:
+Add your key to `.env.local`:
 
 ```dotenv
 GROQ_API_KEY=gsk_your_key_here
@@ -126,10 +125,6 @@ pgrep -lf 'WritingAssistant.app/Contents/MacOS'   # client
 lsof -nP -iTCP:3001 -sTCP:LISTEN                  # api
 ```
 
-> **Restart triggers**
-> - Editing `.env` requires an **API** restart — dotenv loads it at boot only. Ruby code hot-reloads in development; environment variables do not.
-> - Granting Accessibility, or running `build.sh`, requires a **client** restart.
-
 ---
 
 ## Usage
@@ -142,79 +137,3 @@ popover opens with your selection already loaded and the rewrite in flight.
 
 Each suggestion has a **Copy** button; the text is also selectable for partial copies.
 **Quit** is in the popover header — with no Dock icon, that is the intended way out.
-
----
-
-## Configuration
-
-| Setting | Location | Default |
-|---|---|---|
-| Groq API key | `api/.env` → `GROQ_API_KEY` | — |
-| Groq model | `api/.env` → `GROQ_MODEL` | `llama-3.3-70b-versatile` |
-| API base URL | `mac-client/AppConfig.swift` | `http://127.0.0.1:3001` |
-| Keyboard shortcut | `mac-client/StatusItemController.swift` | `kVK_ANSI_R` + `cmdKey \| optionKey` |
-| Rewrite modes | `api/app/services/rewrite_text.rb` → `MODES` | five modes |
-| Temperature / max tokens | `api/app/services/ai/groq_client.rb` | `0.2` / `1200` |
-
-### Changing the modes
-
-`MODES` is the single source of truth — the prompt interpolates from it, and the response
-validator checks against it. Add or remove an entry and both sides stay in sync.
-
-### Changing the model
-
-Any Groq model that supports **JSON mode** works. Verify at
-https://console.groq.com/docs/models — picking one without JSON-mode support returns a `400`
-from Groq rather than degrading silently.
-
----
-
-## How it works
-
-### Text capture
-
-Two strategies, tried in order:
-
-1. **Accessibility API** — reads `kAXSelectedTextAttribute` from the system-wide focused element.
-   Clean, and never touches the clipboard. Many apps don't implement it.
-2. **Synthetic <kbd>⌘</kbd><kbd>C</kbd>** — snapshot the pasteboard, post the keystroke, poll
-   `changeCount` for up to 400 ms, read the string, restore the snapshot. Works nearly everywhere,
-   including Electron apps, browser page content, and terminals.
-
-Two ordering details matter:
-
-- Capture runs **before** `NSApp.activate`. Focusing our own app first would destroy the selection
-  we are trying to read.
-- The hotkey's own modifiers are still physically held when it fires, so posting <kbd>⌘</kbd><kbd>C</kbd>
-  immediately would arrive as <kbd>⌥</kbd><kbd>⌘</kbd><kbd>C</kbd>. The code waits for
-  <kbd>⌥</kbd>/<kbd>⌃</kbd>/<kbd>⇧</kbd> to release first (500 ms cap).
-
-### Why Carbon for the hotkey
-
-`RegisterEventHotKey` needs no Accessibility permission and **consumes** the keystroke.
-`NSEvent.addGlobalMonitorForEvents` requires the permission and lets the event through to the
-frontmost app.
-
-### Why not `MenuBarExtra`
-
-SwiftUI's `MenuBarExtra` has no public API to open itself programmatically, which the shortcut
-requires. `NSStatusItem` + `NSPopover` gives that control at the cost of a little AppKit.
-
-### Why one call for five modes
-
-One round trip and one set of input tokens instead of five. The trade-off is all-or-nothing: if the
-model omits a single mode, the whole response is rejected. `response_format: json_object` constrains
-Groq to valid JSON, so malformed output is not a practical failure path.
-
----
-
-## Known limitations
-
-- **No request cancellation.** Triggering a rewrite twice fires overlapping requests; the last to
-  return wins, and the spinner clears when the first completes.
-- **Ad-hoc signing.** Accessibility permission may need re-granting after each rebuild. A stable
-  signing identity fixes this.
-- **No persistence.** History is not kept between popover sessions.
-- **No auth or rate limiting** on the API — it binds to `127.0.0.1` and assumes a single local user.
-- **Blocking capture.** The fallback path can occupy a background thread for up to ~900 ms in the
-  worst case (modifier wait plus copy timeout).
